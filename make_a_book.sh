@@ -38,6 +38,7 @@ mkdir $ROTATED
 
 
 # Split document into individual pages
+echo "Separating into individual pages..."
 pdfseparate $IN $PAGES/%05d.pdf
 
 # Get number of source pages and calculate number of whole groups
@@ -47,12 +48,14 @@ echo "Source contains $NP pages, so there will be $NG whole groups."
 # Screw the remainder for now TODO
 
 # Scale individual pages to half of US letter
+echo "Scaling each page to half of US letter..."
 for filename in $PAGES/*pdf; do
 	cpdf -scale-to-fit "139.7mm 215.9mm" $filename -o $SCALED/$(basename "$filename")
 done
 
 # Pair pages which appear on same side of same sheet, in correct order
 # For each group, create a correct order and glue pairs together
+echo "Pairing pages in correct order..."
 for ((i=0; i<$NG; i++)); do
 	# pages in current group: (i*16)+1 .. (i*16)+16
 	# four sheets per group
@@ -73,10 +76,10 @@ for ((i=0; i<$NG; i++)); do
 		pairname=`printf %05d $i`-`printf %05d $j`.pdf
 
 		if [ $(($j % 2)) -eq 1 ]; then
-			echo $first $last
+			echo "  $first $last"
 			pdfunite $SCALED/$first.pdf $SCALED/$last.pdf $PAIRS/$pairname
 		else
-			echo $last $first
+			echo "  $last $first"
 			pdfunite $SCALED/$last.pdf $SCALED/$first.pdf $PAIRS/$pairname
 		fi
 	done
@@ -84,6 +87,7 @@ done
 
 
 # Stack paired pages into single-page pdfs
+echo "Stacking paired pages into single-page PDFs..."
 for filename in $PAIRS/*pdf; do
 	echo $filename
 	cpdf -twoup-stack $filename -o $STACKS/$(basename $filename)
@@ -91,6 +95,7 @@ done
 
 
 # Rotate every other pair by 180 deg. for duplex printing
+echo "Rotating every other stacked pair by 180 degrees..."
 let i=0 # Alternation flag
 for filename in $STACKS/*pdf; do
 	if [[ $i -eq 1 ]]; then
@@ -103,7 +108,13 @@ for filename in $STACKS/*pdf; do
 done
 
 # Unite all stacked pairs into one print-ready document
-pdfunite $ROTATED/* $TEMPDIR/$OUT
+echo "Uniting everything into the end result..."
+pdfunite $ROTATED/* $OUT
 
 # Clean-up
+echo "Cleaning up..."
+rm -rf $TEMPDIR
+
+echo "Done. The result is in $OUT."
+
 
