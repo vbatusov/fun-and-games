@@ -57,9 +57,10 @@ done
 # For each group, create a correct order and glue pairs together
 echo "Pairing pages in correct order..."
 for ((i=0; i<$NG; i++)); do
-	# pages in current group: (i*16)+1 .. (i*16)+16
-	# four sheets per group
-	# ech sheet has four pages == two sides
+	# pages in current group: (i*$PPG)+1 .. (i*$PPG)+$PPG
+	# each group will results in $GS printed sheets
+	# each sheet has four pages == two sides
+	# Example of order:
 	# 16 &  1
 	# 2  & 15
 	# 14 &  3
@@ -89,7 +90,7 @@ done
 # Stack paired pages into single-page pdfs
 echo "Stacking paired pages into single-page PDFs..."
 for filename in $PAIRS/*pdf; do
-	echo $filename
+	#echo $filename
 	cpdf -twoup-stack $filename -o $STACKS/$(basename $filename)
 done
 
