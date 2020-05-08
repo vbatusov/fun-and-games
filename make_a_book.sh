@@ -1,4 +1,11 @@
 #!/usr/bin/bash
+
+
+# TODO
+# Must insert two blank pages in the beginning and two at the end. For binding purposes.
+
+
+
 # What we need:
 # - input file
 # - group size. By a group we mean the number SHEETS that will be folded and stitched together. Usually 4.
