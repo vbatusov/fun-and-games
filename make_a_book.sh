@@ -21,7 +21,7 @@ echo "This script depends on Coherent PDF <http://community.coherentpdf.com/>, p
 # If can't create temp dir or group size is not a number, or cpdf not available,
 # then you know what you should do
 if [ -d $TEMPDIR ] || [ ! -z "${GS//[0-9]}" ] || [ ! -x "$(command -v cpdf)" ]; then
-	echo "Fuck off"
+	echo "I'm sorry, Dave, I'm afraid I can't do that."
 	exit 1
 fi
 
