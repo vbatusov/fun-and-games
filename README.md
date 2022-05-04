@@ -28,3 +28,5 @@ An unorganized collection of fun and maybe useful things
 ```
 
 * `sqrt.py` A stupidly simple way of approximating (to arbitrary precision) monotonic functions using binary search, which are otherwise non-trivial to compute. Just a fun idea.
+
+* `vane_anem_control.ino` Arduino code for my wind vane/anemometer design. Need to put the entire design in a repo; this will suffice for now.
