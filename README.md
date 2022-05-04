@@ -26,3 +26,5 @@ An unorganized collection of fun and maybe useful things
                               |                              
                               |                              
 ```
+
+* `sqrt.py` A stupidly simple way of approximating (to arbitrary precision) monotonic functions using binary search, which are otherwise non-trivial to compute. Just a fun idea.
